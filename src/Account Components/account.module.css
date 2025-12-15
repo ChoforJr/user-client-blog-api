@@ -20,3 +20,11 @@
 .accountInfo input {
   margin-right: 1.5rem;
 }
+
+.accountDeleteBtn {
+  width: fit-content;
+  background-color: red;
+}
+.accountDeleteBtn:hover {
+  background-color: rgb(148, 2, 2);
+}

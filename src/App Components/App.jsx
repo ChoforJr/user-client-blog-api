@@ -17,6 +17,7 @@ const App = () => {
     deleteComment,
     account,
     changeAccountInfo,
+    deleteAccount,
     profiles,
   } = useAppLogic();
 
@@ -31,6 +32,7 @@ const App = () => {
     deleteComment,
     account,
     changeAccountInfo,
+    deleteAccount,
     profiles,
   };
   return (

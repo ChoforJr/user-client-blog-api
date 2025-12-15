@@ -5,7 +5,8 @@ import { useContext } from "react";
 const apiUrl = import.meta.env.VITE_BLOG_API_URL;
 
 const Account = () => {
-  const { auth, account, changeAccountInfo } = useContext(ItemContext);
+  const { auth, account, changeAccountInfo, deleteAccount } =
+    useContext(ItemContext);
   const [newDisplayName, setNewDisplayName] = useState("");
   const [newBio, setNewBio] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -275,6 +276,12 @@ const Account = () => {
               <button onClick={submitNewPassword}>Change</button>
             </fieldset>
           </div>
+          <button
+            className={styles.accountDeleteBtn}
+            onClick={(event) => deleteAccount(event)}
+          >
+            Permanently Delete Account
+          </button>
         </>
       ) : (
         <h1>

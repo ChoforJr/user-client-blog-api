@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_BLOG_API_URL;
 
 export function useAppLogic() {
@@ -9,6 +10,7 @@ export function useAppLogic() {
   const [account, setAccount] = useState([]);
   const [comments, setComments] = useState([]);
   const [profiles, setProfiles] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getComments() {
@@ -200,6 +202,33 @@ export function useAppLogic() {
       [name]: value,
     }));
   }
+  async function deleteAccount(event) {
+    event.preventDefault();
+    try {
+      const authToken = localStorage.getItem("authorization");
+
+      const response = await fetch(`${apiUrl}/user/myProfile`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `${authToken}`,
+        },
+      });
+
+      if (response.ok) {
+        setAuth(false);
+        setAccount([]);
+        localStorage.removeItem("authorization");
+        navigate("/signIn", { replace: true });
+      } else {
+        const result = await response.json();
+        console.error(result.errors);
+        alert("Error, see console logs");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  }
 
   return {
     id,
@@ -212,6 +241,7 @@ export function useAppLogic() {
     deleteComment,
     account,
     changeAccountInfo,
+    deleteAccount,
     profiles,
   };
 }
