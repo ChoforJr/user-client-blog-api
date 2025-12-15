@@ -63,7 +63,9 @@ const SignIn = () => {
         setAuth(true);
         navigate("/account", { replace: true });
       } else {
-        alert("Login failed. Please check your credentials.");
+        const result = await response.json();
+        console.error(result.errors);
+        alert("Error, see console logs");
       }
     } catch (error) {
       console.error("Network error:", error);
@@ -92,14 +94,11 @@ const SignIn = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        localStorage.removeItem("authorization");
-        localStorage.setItem("authorization", `Bearer ${data.token}`);
-        setAuth(true);
         setLoginPage(true);
-        navigate("/account", { replace: true });
       } else {
-        alert("SignUp failed. Please check your credentials.");
+        const result = await response.json();
+        console.error(result.errors);
+        alert("Error, see console logs");
       }
     } catch (error) {
       console.error("Network error:", error);
