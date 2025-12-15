@@ -106,7 +106,7 @@ export function useAppLogic() {
 
   useEffect(() => {
     const authToken = localStorage.getItem("authorization");
-    if (authToken && auth) {
+    if (authToken) {
       async function getAccountInfo() {
         try {
           const response = await fetch(`${apiUrl}/user/myProfile`, {
@@ -137,6 +137,7 @@ export function useAppLogic() {
           };
 
           setAccount(neededItems);
+          setAuth(true);
         } catch (error) {
           console.error("Network error:", error);
         }

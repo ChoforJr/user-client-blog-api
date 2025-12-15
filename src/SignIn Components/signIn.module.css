@@ -13,7 +13,10 @@ button {
   font-size: 1.5rem;
   align-self: center;
   color: #e6e6fa;
-  background-color: #008b8b;
+  background-color: #238b00;
   border-color: #8fbc8b;
   border-radius: 1rem;
+}
+button:hover {
+  background-color: yellow;
 }
