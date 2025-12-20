@@ -58,7 +58,7 @@ const App = () => {
       <footer>
         Made by{" "}
         <a
-          href="https://github.com/ChoforJr/admin-client-blog-api"
+          href="https://github.com/ChoforJr/user-client-blog-api"
           target="_blank"
         >
           Chofor Forsakang
