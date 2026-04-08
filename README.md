@@ -2,6 +2,13 @@
 
 A modern, responsive React-based frontend client for the Blog API. This application allows users to browse and read blog posts in a user-friendly interface.
 
+## Related Projects
+
+This is part of a three-part Blog API ecosystem:
+
+- 📱 **[Blog API Backend](https://github.com/ChoforJr/blog-api)** - RESTful API server
+- 👥**[Admin Client](https://github.com/ChoforJr/admin-client-blog-api)** - Admin dashboard client
+
 ## 📋 Table of Contents
 
 - [Features](#features)
@@ -119,13 +126,6 @@ tests/
 | `npm run preview` | Preview production build locally |
 | `npm run test`    | Run tests with Vitest            |
 | `npm run lint`    | Run ESLint to check code quality |
-
-## Related Projects
-
-This is part of a three-part Blog API ecosystem:
-
-- 📱 **[Blog API Backend](https://github.com/ChoforJr/blog-api)** - RESTful API server
-- 👥**[Admin Client](https://github.com/ChoforJr/admin-client-blog-api)** - Admin dashboard client
 
 ## Author
 
