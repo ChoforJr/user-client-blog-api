@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, MessageCircle, RefreshCw } from "lucide-react";
 import { useBlog } from "@/components/BlogProvider";
 import { Notice } from "@/components/Notice";
+import { MarkdownContent } from "@/components/MarkdownContent";
 
 function formatDate(value: string | null): string {
   if (!value) return "—";
@@ -59,9 +60,7 @@ export function PostsList() {
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-4 line-clamp-4 whitespace-pre-wrap leading-7 text-white/75">
-                {post.content}
-              </p>
+              <MarkdownContent className="mt-4 line-clamp-4 break-words leading-7 text-white/75 [&_a]:text-leaf [&_a]:underline" content={post.content} />
               <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6 text-sm text-white/60">
                 <span>Created {formatDate(post.createdAt)}</span>
                 <span className="inline-flex items-center gap-2">

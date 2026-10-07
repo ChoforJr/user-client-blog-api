@@ -7,6 +7,7 @@ import { apiRequest } from "@/lib/api";
 import { normalizeComment } from "@/lib/normalize";
 import { useBlog } from "@/components/BlogProvider";
 import { Notice } from "@/components/Notice";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import type { Comment } from "@/lib/types";
 
 function formatDate(value: string): string {
@@ -146,9 +147,10 @@ export function PostDetail({ postId }: { postId: string }) {
         </h1>
         <p className="mt-4 text-sm text-white/60">Created {formatDate(post.createdAt)}</p>
       </header>
-      <div className="whitespace-pre-wrap break-words text-base leading-8 text-white/85 sm:text-lg">
-        {post.content}
-      </div>
+      <MarkdownContent
+        className="break-words text-base leading-8 text-white/85 sm:text-lg [&_a]:text-leaf [&_a]:underline"
+        content={post.content}
+      />
 
       <section aria-labelledby="comments-heading" className="mt-14 border-t border-white/15 pt-8">
         <h2 className="font-display text-3xl font-bold" id="comments-heading">
