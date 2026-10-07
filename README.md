@@ -1,131 +1,63 @@
 # Blog API User Client
 
-A modern, responsive React-based frontend client for the Blog API. This application allows users to browse and read blog posts in a user-friendly interface.
+A responsive Next.js App Router and strict TypeScript frontend for the separately deployed Blog API. The client supports published posts, post details and comments, account registration/sign-in, profile updates, password changes, and account deletion.
 
-## Related Projects
+## API configuration
 
-This is part of a three-part Blog API ecosystem:
+The Blog API remains an independent backend deployment. Set its base URL in the Vercel project for this client and locally in `.env.local`:
 
-- 📱 **[Blog API Backend](https://github.com/ChoforJr/blog-api)** - RESTful API server
-- 👥**[Admin Client](https://github.com/ChoforJr/admin-client-blog-api)** - Admin dashboard client
+```env
+# Server-rendered published posts, comments, and profiles
+BLOG_API_URL=https://your-blog-api.example.com
 
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
-- [Available Scripts](#available-scripts)
-- [Related Projects](#related-projects)
-- [Contributing](#contributing)
-- [License](#license)
-- [Author](#author)
-
-## ✨ Features
-
-- **Browse Posts**: View all published blog posts with pagination
-- **Post Details**: Read individual posts with complete content
-- **User Authentication**: Sign in to access personalized features
-- **Account Management**: Manage user profile and preferences
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Error Handling**: Graceful error pages for a better user experience
-- **Fast Performance**: Built with Vite for optimized load times
-
-## 📦 Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js** (v16.0.0 or higher)
-- **npm** (v7.0.0 or higher) or **yarn**
-- **Git** (for cloning the repository)
-
-## 🚀 Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/ChoforJr/user-client-blog-api.git
-   cd user-client-blog-api
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Configure environment (if needed)**
-
-   Create a `.env` file in the root directory:
-
-   ```env
-   VITE_API_URL=http://localhost:3000/api
-   ```
-
-## 🎯 Getting Started
-
-1. **Start the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-   The application will be available at `http://localhost:5173`
-
-2. **Build for production**
-
-   ```bash
-   npm run build
-   ```
-
-3. **Preview production build**
-
-   ```bash
-   npm run preview
-   ```
-
-## 📁 Project Structure
-
-```
-src/
-├── App Components/          # Main App layout and logic
-├── HomePage Components/     # Home page view
-├── Posts Components/        # Posts list view
-├── Post Components/         # Individual post view
-├── SignIn Components/       # Authentication view
-├── Account Components/      # User account management
-├── App.jsx                  # Root app component
-├── ItemContext.jsx          # Context API setup
-├── routes.jsx               # Route definitions
-├── ErrorPage.jsx            # Error boundary page
-└── main.jsx                 # Application entry point
-
-tests/
-├── setup.js                 # Test configuration
+# Browser requests for sign-in, account management, and comments
+NEXT_PUBLIC_BLOG_API_URL=https://your-blog-api.example.com
 ```
 
-## 🛠️ Technologies Used
+Both values should point to the API base URL (without a trailing slash). `BLOG_API_URL` is used for server-rendered public data; `NEXT_PUBLIC_BLOG_API_URL` is used by browser requests for sign-in, account management, and comments. The public URL is an endpoint address, **not a credential**. Do not put API secrets or credentials in either variable. If the API is hosted on another origin, its CORS policy must allow this frontend origin for browser-side requests.
 
-- **React** (v19.1.1) - UI library
-- **React Router DOM** (v7.8.2) - Client-side routing
-- **Vite** (v7.1.2) - Build tool and dev server
-- **Lucide React** (v0.541.0) - Icon library
-- **Vitest** (v3.2.4) - Testing framework
-- **ESLint** (v9.33.0) - Code linting
+An example is available in [`.env.example`](.env.example). The previous `VITE_BLOG_API_URL` setting is no longer read.
 
-## 📝 Available Scripts
+Browser API requests include credentials and use the API's HttpOnly `blog_user_session` cookie. The API keeps this session separate from the admin frontend, even though both clients call the same API origin. After the backend introduces role-specific cookies, sign in again once in each app; the previous shared cookie is no longer used. The client intentionally ignores any temporary JWT in the login response and never stores it in browser storage. The browser also connects to the API's native `/ws` endpoint for live post/comment updates, reconnecting and restoring the open post subscription after disconnects.
 
-| Command           | Description                      |
-| ----------------- | -------------------------------- |
-| `npm run dev`     | Start development server         |
-| `npm run build`   | Create production build          |
-| `npm run preview` | Preview production build locally |
-| `npm run test`    | Run tests with Vitest            |
-| `npm run lint`    | Run ESLint to check code quality |
+## Run locally
+
+Requires Node.js 18.18 or newer and npm.
+
+```bash
+npm install
+cp .env.example .env.local
+# Set the API URLs in .env.local
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Next.js development server |
+| `npm run build` | Create the production build |
+| `npm run start` | Serve the production build |
+| `npm run typecheck` | Run strict TypeScript checks |
+| `npm run lint` | Run ESLint with Next.js rules |
+| `npm test` | Compile and run TypeScript unit tests |
+
+## Routes
+
+- `/` — Blog home
+- `/posts` — Published posts and comment counts
+- `/posts/[id]` — Post detail, comments, and authenticated comment controls
+- `/signIn` — Sign in and account registration
+- `/account` — Profile, username and password updates, sign out, and account deletion
+
+Deployment is managed by Vercel's native Next.js integration; no SPA rewrite is required. Deploy this repository independently from the Blog API backend and admin client.
+
+## Related projects
+
+- [Blog API backend](https://github.com/ChoforJr/blog-api)
+- [Admin client](https://github.com/ChoforJr/admin-client-blog-api)
 
 ## Author
 
