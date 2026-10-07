@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw } from "lucide-react";
+import { ArrowLeft, MessageCircle, RefreshCw } from "lucide-react";
 import { apiRequest } from "@/lib/api";
 import { normalizeComment } from "@/lib/normalize";
 import { useBlog } from "@/components/BlogProvider";
@@ -136,26 +136,37 @@ export function PostDetail({ postId }: { postId: string }) {
   }
 
   return (
-    <article className="mx-auto w-full max-w-3xl">
-      <Link className="inline-flex items-center gap-2 text-sm font-semibold text-leaf hover:text-white" href="/posts">
+    <article className="mx-auto w-full max-w-4xl">
+      <Link className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white/70 transition hover:border-leaf/40 hover:text-leaf" href="/posts">
         <ArrowLeft aria-hidden="true" size={16} /> All posts
       </Link>
-      <header className="mb-8 mt-7 border-b border-white/15 pb-7">
-        <p className="text-sm font-semibold text-leaf">Published {formatDate(post.publishedAt ?? post.createdAt)}</p>
-        <h1 className="mt-3 break-words font-display text-4xl font-bold leading-tight sm:text-5xl">
+      <header className="mb-8 mt-10 border-b border-white/15 pb-8 sm:mt-14">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-leaf">A story from the journal</p>
+        <h1 className="mt-5 max-w-3xl break-words font-display text-4xl font-medium leading-[1.08] tracking-tight text-paper sm:text-6xl">
           {post.title}
         </h1>
-        <p className="mt-4 text-sm text-white/60">Created {formatDate(post.createdAt)}</p>
+        <p className="mt-6 inline-flex items-center gap-2 text-sm text-white/55">
+          <span className="size-2 rounded-full bg-leaf" />
+          Published {formatDate(post.publishedAt ?? post.createdAt)}
+        </p>
       </header>
       <MarkdownContent
-        className="break-words text-base leading-8 text-white/85 sm:text-lg [&_a]:text-leaf [&_a]:underline"
+        className="reading-surface break-words rounded-[1.6rem] px-6 py-7 text-base leading-8 sm:px-10 sm:py-10 sm:text-lg [&_a]:font-semibold [&_a]:text-forest [&_a]:underline [&_blockquote]:border-forest/30 [&_code]:bg-forest/10 [&_h1]:mt-8 [&_h1]:text-3xl [&_h2]:mt-8 [&_h2]:text-2xl [&_h3]:mt-7 [&_h3]:text-xl"
         content={post.content}
       />
 
-      <section aria-labelledby="comments-heading" className="mt-14 border-t border-white/15 pt-8">
-        <h2 className="font-display text-3xl font-bold" id="comments-heading">
-          Conversation <span className="text-lg font-normal text-white/60">({postComments.length})</span>
-        </h2>
+      <section aria-labelledby="comments-heading" className="mt-14 border-t border-white/15 pt-9 sm:mt-20">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-leaf">The conversation</p>
+            <h2 className="mt-2 font-display text-3xl font-medium text-paper sm:text-4xl" id="comments-heading">
+              Reader notes
+            </h2>
+          </div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-xs font-semibold text-white/60">
+            <MessageCircle aria-hidden="true" size={14} /> {postComments.length}
+          </span>
+        </div>
         {error && <div className="mt-5"><Notice kind="error">{error}</Notice></div>}
         {authLoading ? null : authenticated ? (
           <form className="mt-6 space-y-3" onSubmit={submitComment}>
@@ -194,7 +205,7 @@ export function PostDetail({ postId }: { postId: string }) {
               const author = profiles.find((profile) => profile.userId === comment.userId);
               const isOwner = account?.id === comment.userId;
               return (
-                <article className="rounded-xl border border-white/10 bg-white/[0.05] p-5" key={comment.id}>
+                <article className="rounded-2xl border border-white/10 bg-white/[0.045] p-5 sm:p-6" key={comment.id}>
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="font-semibold text-leaf">{author?.displayName || "Reader"}</p>
                     <time className="text-xs text-white/50" dateTime={comment.createdAt}>

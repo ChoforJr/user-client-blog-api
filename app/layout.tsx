@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     template: "%s | Chofor's Blog",
   },
   description: "Read published stories and join the conversation on Chofor's Blog.",
+  applicationName: "Chofor's Blog",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+  },
 };
 
 export const dynamic = "force-dynamic";
