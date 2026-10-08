@@ -79,7 +79,7 @@ export function PostsList() {
                   {post.title}
                 </Link>
               </h2>
-              <MarkdownContent className="relative mt-4 line-clamp-4 break-words leading-7 text-forest/70 [&_a]:text-forest [&_a]:underline" content={post.content} />
+              <MarkdownContent className="relative mt-4 max-h-28 overflow-hidden break-words leading-7 text-forest/70 [&_a]:text-forest [&_a]:underline" content={post.content} />
               <div className="relative mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-forest/10 pt-6 text-xs font-medium text-forest/55">
                 <span className="inline-flex items-center gap-2">
                   <MessageCircle aria-hidden="true" size={15} className="text-forest/50" />
